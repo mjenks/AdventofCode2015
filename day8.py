@@ -14,10 +14,35 @@ def parse(puzzle_input):
     
 
 #functions for part 1
+def length_stringliteral(literal):
+    return len(literal)
+    
+def length_memory(literal):
+    #start with the number of char minus 2 for the double quotes
+    numchar = len(literal) - 2
+    char_list = list(literal)
+    i = 0
+    for charcter in char_list:
+        if charcter == '\\':
+            if char_list[i-1] == '\\': #can't go out of array because all start with "
+                numchar = numchar
+            elif char_list[i+1] == 'x':
+                numchar -= 3
+            else:
+                numchar -=1
+        i += 1
+    return numchar
+    
 
 #solve part 1
 def part1(puzzle_data):
-    return 0
+    literals = []
+    memory = []
+    for literal in puzzle_data:
+        literals.append(length_stringliteral(literal))
+        memory.append(length_memory(literal))
+        
+    return sum(literals) - sum(memory)
 
 #functions for part 2
 
