@@ -21,10 +21,17 @@ def part1(puzzle_data):
     return sum(len(line) - len(eval(line)) for line in puzzle_data)
 
 #functions for part 2
+def new_length(s):
+    total = len(s) + 2 # plus 2 for the surrounding quotes
+    #then add one for each \ and " in the original string
+    total += s.count('\\') 
+    total += s.count('"')
+    return total
 
 #solve part 2
 def part2(puzzle_data):
-    return 0
+    
+    return sum(new_length(line) - len(line) for line in puzzle_data)
 
 #run and print solution 
 puzzle_path = "input_day8.txt"
