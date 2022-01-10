@@ -7,6 +7,9 @@ Created on Mon Jan 10 11:20:28 2022
 
 #parse input
 def parse(puzzle_input):
+    data = []
+    for line in puzzle_input:
+        data.append(line.strip())
     return data
     
 
@@ -23,9 +26,9 @@ def part2(puzzle_data):
     return 0
 
 #run and print solution 
-puzzle_path = ""
+puzzle_path = "input_day8.txt"
 with open(puzzle_path) as f:
-    puzzle_input = f.read()
+    puzzle_input = f.readlines()
     
 puzzle_data = parse(puzzle_input)
 solution1 = part1(puzzle_data)
