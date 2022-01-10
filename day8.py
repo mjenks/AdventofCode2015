@@ -14,22 +14,11 @@ def parse(puzzle_input):
     
 
 #functions for part 1
-def length_stringliteral(literal):
-    return len(literal)
-    
-def length_memory(literal):
-    return len(eval(literal))
     
 
 #solve part 1
-def part1(puzzle_data):
-    literals = []
-    memory = []
-    for literal in puzzle_data:
-        literals.append(length_stringliteral(literal))
-        memory.append(length_memory(literal))
-        
-    return sum(literals) - sum(memory)
+def part1(puzzle_data):        
+    return sum(len(line) - len(eval(line)) for line in puzzle_data)
 
 #functions for part 2
 
