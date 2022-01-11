@@ -54,7 +54,27 @@ def part1(puzzle_data):
 
 #solve part 2
 def part2(puzzle_data):
-    return 0
+    paths, destinations = puzzle_data
+    longest_path = 0
+    cities_list = list(destinations)
+    #make a matrix of distances between cities
+    distance_matrix = [[0 for i in cities_list] for j in cities_list]
+    for path in paths:
+        cities, dist = path
+        distance_matrix[cities_list.index(cities[0])][cities_list.index(cities[1])] = dist
+        distance_matrix[cities_list.index(cities[1])][cities_list.index(cities[0])] = dist
+    possible_routes = list(itertools.permutations(cities_list))
+    distance = 0
+    for route in possible_routes:
+        for i in range(len(route)-1):
+            cityA = cities_list.index(route[i])
+            cityB = cities_list.index(route[i+1])
+            distance += int(distance_matrix[cityA][cityB])
+        if distance > longest_path:
+            longest_path = distance
+        distance = 0
+        
+    return longest_path
 
 #run and print solution 
 puzzle_path = "input_day9.txt"
