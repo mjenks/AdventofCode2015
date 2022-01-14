@@ -4,6 +4,8 @@ Created on Fri Jan 07 12:07:19 2022
 
 @author: mjenks
 """
+import numpy
+import matplotlib.pyplot as plt
 
 #parse input
 def parse(puzzle_input):
@@ -63,6 +65,7 @@ def toggle(display, start, stop):
 
 #solve part 1
 def part1(puzzle_data):
+    fname = "light_display1"
     rows, cols = (1000, 1000)
     display = [[0 for i in range(cols)] for j in range(rows)]
     for step in puzzle_data:
@@ -72,6 +75,8 @@ def part1(puzzle_data):
             display = turn_on(display, step[1], step[2])
         elif step[0] == 2:
             display = toggle(display, step[1], step[2])
+    plot_display(display, fname)
+        
     total_on = sum(i.count(1) for i in display)
         
     return total_on
@@ -108,6 +113,7 @@ def toggle2(display, start, stop):
 
 #solve part 2
 def part2(puzzle_data):
+    fname = "light_display2"
     rows, cols = (1000, 1000)
     display = [[0 for i in range(cols)] for j in range(rows)]
     for step in puzzle_data:
@@ -117,9 +123,20 @@ def part2(puzzle_data):
             display = turn_on2(display, step[1], step[2])
         elif step[0] == 2:
             display = toggle2(display, step[1], step[2])
+    plot_display(display, fname)
     brightness = sum(sum(i) for i in display)
         
     return brightness
+    
+#Additional code for fun
+#save plot of the final display
+def plot_display(display, fname):
+    x, y = numpy.meshgrid(range(1000), range(1000))
+    display = numpy.array(display)
+    plt.scatter(x,y,s=display[x,y])
+    plt.axis('off')
+    plt.savefig(fname)
+    return
 
 #run and print solution 
 puzzle_path = "input_day6.txt"
