@@ -72,19 +72,24 @@ def rule3(pwd):
 
 #solve part 1
 def part1(puzzle_data):
-    return 0
+    test_pwd = puzzle_data
+    fails = True
+    while fails:
+        test_pwd = increment(test_pwd)
+        if rule1(test_pwd) and rule2(test_pwd) and rule3(test_pwd):
+            new_pwd = test_pwd
+            fails = False
+            
+    return new_pwd
 
-#functions for part 2
 
-#solve part 2
-def part2(puzzle_data):
-    return 0
 
 #run and print solution 
 puzzle_input = "hxbxwxba"
     
 puzzle_data = puzzle_input
 solution1 = part1(puzzle_data)
-solution2 = part2(puzzle_data)
+#part 2 is the same but with part 1 solution as input
+solution2 = part1(solution1)
 print(solution1)
 print(solution2)
