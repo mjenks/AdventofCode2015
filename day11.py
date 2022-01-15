@@ -7,6 +7,7 @@ Created on Sat Jan 15 10:55:04 2022
 import string
 
 #functions for part 1
+#function to increment password by one letter
 def increment(pwd):
     old_pwd = list(pwd)
     iterating = True
@@ -33,6 +34,41 @@ def increment(pwd):
         i -= 1
 
     return ''.join(new_pwd)
+    
+#check if password meets the first requirement (3 consective letters)
+def rule1(pwd):
+    pwd = list(pwd)
+    for i in range(len(pwd) - 2):
+        one = string.ascii_lowercase.index(pwd[i])
+        two = string.ascii_lowercase.index(pwd[i+1])
+        three = string.ascii_lowercase.index(pwd[i+2])
+        if (one + 1) == two and (three -1) == two:
+            return True
+        
+    return False
+    
+#check if password meets second requirement (no i o or l)
+def rule2(pwd):
+    i = 'i' in pwd
+    o = 'o' in pwd
+    l = 'l' in pwd
+    return not(i) and not(o) and not(l)
+    
+    
+#check if password meets third requirement (two different non overlapping pairs)
+def rule3(pwd):
+    pwd = list(pwd)
+    count = 0
+    letters = set()
+    for i in range(len(pwd)-1):
+        if pwd[i] == pwd[i+1]:
+            count += 1
+            letters.add(pwd[i])
+    if (count > 1) and (len(letters) > 1):
+        return True
+        
+    return False
+    
 
 #solve part 1
 def part1(puzzle_data):
