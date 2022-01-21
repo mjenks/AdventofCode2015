@@ -51,10 +51,23 @@ def part1(puzzle_data):
     return sum(numbers)
 
 #functions for part 2
+def nonred_sum(obj):
+    if type(obj) == int:
+        return obj
+    elif type(obj) == list:
+        return sum([nonred_sum(a) for a in obj])
+    elif type(obj) != dict:
+        return 0
+    elif 'red' in obj.values():
+        return 0
+    else:
+        return nonred_sum(list(obj.values()))
+        
 
 #solve part 2
-def part2(puzzle_data):
-    return 0
+def part2(puzzle_data):  
+            
+    return nonred_sum(puzzle_data)
 
 #run and print solution 
 puzzle_path = "input_day12.txt"
