@@ -5,6 +5,7 @@ Created on Fri Jan 21 17:30:27 2022
 @author: mjenks
 """
 
+import json
 
 #parse input
 #I am choosing to treat the json input as simply a list of characters
@@ -15,7 +16,8 @@ def parse1(puzzle_input):
     
 #part 2 looks at features of the json encoding so json parsing is useful
 def parse2(puzzle_input):
-    return 0
+    data = json.loads(puzzle_input)
+    return data
     
 
 #functions for part 1
