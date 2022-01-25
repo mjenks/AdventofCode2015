@@ -58,7 +58,30 @@ def part1(puzzle_data):
 
 #solve part 2
 def part2(puzzle_data):
-    return 0
+    people, happiness = puzzle_data
+    #add yourself with 0 happiness all around
+    for x in range(len(people)):
+        happiness[x].append(0)
+    people.append('self')
+    happiness.append([0 for n in people])
+    
+    arrangements = list(itertools.permutations(people))
+    max_mood = 0
+    for seating in arrangements:
+        mood = 0
+        for i in range(len(seating)-1):
+            a = people.index(seating[i])
+            b = people.index(seating[i+1])
+            mood += happiness[a][b] + happiness[b][a]
+        a = people.index(seating[-1])
+        b = people.index(seating[0])
+        mood += happiness[a][b] + happiness[b][a]
+        
+        if mood > max_mood:
+            max_mood = mood
+            
+    
+    return max_mood
 
 #run and print solution 
 puzzle_path = "input_day13.txt"
