@@ -47,8 +47,32 @@ def part1(puzzle_data):
 #functions for part 2
 
 #solve part 2
+#adding additional stored values to each reindeer to be as follows
+# [name, flight speed, flight time, rest time, position, points]
 def part2(puzzle_data):
-    return 0
+    for reindeer in puzzle_data:
+        reindeer.append(0)
+        reindeer.append(0)
+    race_time = 2503
+    #loop to move and score each reindeer for every second of the race
+    for i in range(race_time):
+        positions = []
+        # move
+        for deer in puzzle_data:
+            #check if flying
+            if (i % (deer[2] + deer[3])) < deer[2]:
+                deer[4] += deer[1]
+            positions.append(deer[4])
+        #score
+        for deer in puzzle_data:
+            if deer[4] == max(positions):
+                deer[5] += 1
+    #list scores after race
+    scores = []
+    for deer in puzzle_data:
+        scores.append(deer[5])
+    
+    return max(scores)
 
 #run and print solution 
 puzzle_path = "input_day14.txt"
