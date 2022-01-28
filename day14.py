@@ -17,22 +17,13 @@ def parse(puzzle_input):
 
 #functions for part 1
 def traveled(deer, time):
-    time_count = 0
-    resting = False
-    distance = 0
-    while time_count < time:
-        if not resting:
-            if (time_count + deer[2]) <= time:
-                distance += deer[1]*deer[2]
-                time_count += deer[2]
-                resting = True
-            else:
-                remaining = time - time_count
-                distance += deer[1]*remaining
-                time_count += remaining
-        elif resting:
-            time_count += deer[3]
-            resting = False
+    cycles = time // (deer[2] + deer[3])
+    remaining = time % (deer[2] + deer[3])
+    if remaining < deer[2]:
+        distance = cycles * deer[1]*deer[2] + deer[1]*remaining
+    else:
+        distance = (cycles + 1) * deer[1]*deer[2]
+    
     return distance
 
 #solve part 1
