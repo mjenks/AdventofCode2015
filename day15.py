@@ -7,7 +7,8 @@ Created on Fri Jan 28 14:51:21 2022
 
 #define an ingredient class
 class ingredient:
-    def _init_(self, cap, dur, fla, tex, cal):
+    def __init__(self, name, cap, dur, fla, tex, cal):
+        self.name = name
         self.capacity = cap
         self.durability = dur
         self.flavor = fla
@@ -16,6 +17,10 @@ class ingredient:
 
 #parse input
 def parse(puzzle_input):
+    data = []
+    for line in puzzle_input:
+        line = line.split()
+        data.append(ingredient(line[0].strip(':'), int(line[2].strip(',')), int(line[4].strip(',')), int(line[6].strip(',')), int(line[8].strip(',')), int(line[10])))
     return data
     
 
@@ -34,9 +39,10 @@ def part2(puzzle_data):
 #run and print solution 
 puzzle_path = "input_day15.txt"
 with open(puzzle_path) as f:
-    puzzle_input = f.read()
+    puzzle_input = f.readlines()
     
 puzzle_data = parse(puzzle_input)
+print(puzzle_data)
 solution1 = part1(puzzle_data)
 solution2 = part2(puzzle_data)
 print(solution1)
