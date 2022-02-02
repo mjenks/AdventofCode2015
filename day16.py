@@ -17,14 +17,24 @@ perfumes: 1
 
 @author: mjenks
 """
-
+#dictionary to store mfcsam output
+mfcsam = {"children": 3, 
+          "cats": 7,
+          "samoyeds": 2,
+          "pomeranians": 3,
+          "akitas": 0,
+          "vizslas": 0,
+          "goldfish": 5,
+          "trees": 3,
+          "cars": 2,
+          "perfumes": 1}
 
 #parse input
 def parse(puzzle_input):
     data = []
     for line in puzzle_input:
         line = line.strip()
-        number = int(list(line.split()[1])[0])
+        number = int((line.split()[1]).strip(':'))
         line = line.split(',')
         first = line[0].split()
         line[0] = ' '.join(first[2:])
@@ -33,10 +43,28 @@ def parse(puzzle_input):
     return data
 
 #functions for part 1
+def isSender(sue):
+    sender = True
+    for attr in sue:
+        attr = attr.split(':')
+        name = attr[0].strip()
+        value = int(attr[1])
+        if value != mfcsam[name]:
+            sender = False
+            
+    return sender
+        
+        
 
 #solve part 1
 def part1(puzzle_data):
-    return 0
+    potentials = []
+    for sue in puzzle_data:
+        num, traits = sue
+        if isSender(traits):
+            potentials.append(num)
+    
+    return potentials
 
 #functions for part 2
 
