@@ -18,8 +18,18 @@ perfumes: 1
 @author: mjenks
 """
 
+
 #parse input
 def parse(puzzle_input):
+    data = []
+    for line in puzzle_input:
+        line = line.strip()
+        number = int(list(line.split()[1])[0])
+        line = line.split(',')
+        first = line[0].split()
+        line[0] = ' '.join(first[2:])
+        aunt = number, line
+        data.append(aunt)
     return data
 
 #functions for part 1
