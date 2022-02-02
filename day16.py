@@ -66,11 +66,35 @@ def part1(puzzle_data):
     
     return potentials
 
+#for part 2 cats and trees are a lower limit 
+# and pomeranians and goldfish are an upper limit
 #functions for part 2
+def isSender2(sue):
+    sender = True
+    for attr in sue:
+        attr = attr.split(':')
+        name = attr[0].strip()
+        value = int(attr[1])
+        if name == 'trees' or name == 'cats':
+            if value <= mfcsam[name]:
+                sender = False
+        elif name == 'pomeranians' or name == 'goldfish':
+            if value >= mfcsam[name]:
+                sender = False
+        elif value != mfcsam[name]:
+            sender = False
+            
+    return sender
 
 #solve part 2
 def part2(puzzle_data):
-    return 0
+    potentials = []
+    for sue in puzzle_data:
+        num, traits = sue
+        if isSender2(traits):
+            potentials.append(num)
+    
+    return potentials
 
 #run and print solution 
 puzzle_path = "input_day16.txt"
