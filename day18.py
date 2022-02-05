@@ -63,8 +63,11 @@ def update(grid):
 
 #solve part 1
 def part1(puzzle_data):
+    lights = puzzle_data
+    for x in range(100):
+        lights = update(lights)
     
-    return 0
+    return sum(sum(n) for n in lights)
 
 #functions for part 2
 
