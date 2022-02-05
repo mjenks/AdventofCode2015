@@ -5,6 +5,8 @@ Created on Fri Feb 04 20:26:42 2022
 @author: mjenks
 """
 
+import itertools
+
 #parse input
 def parse(puzzle_input):
     data = []
@@ -17,7 +19,17 @@ def parse(puzzle_input):
 
 #solve part 1
 def part1(puzzle_data):
-    return 0
+    nog = 150
+    count = 0
+    for i in range(1, len(puzzle_data)+1):
+        #gives all combinations of i containers 
+        comb = itertools.combinations(puzzle_data, i)
+        for option in comb:
+            if sum(option) == nog:
+                count +=1
+    
+        
+    return count
 
 #functions for part 2
 
