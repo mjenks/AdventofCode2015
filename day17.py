@@ -7,6 +7,9 @@ Created on Fri Feb 04 20:26:42 2022
 
 #parse input
 def parse(puzzle_input):
+    data = []
+    for line in puzzle_input:
+        data.append(int(line.strip()))
     return data
     
 
