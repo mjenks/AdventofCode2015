@@ -35,7 +35,19 @@ def part1(puzzle_data):
 
 #solve part 2
 def part2(puzzle_data):
-    return 0
+    nog = 150
+    count = 0
+    i = 0
+    fits = False
+    while not fits:
+        i += 1
+        #gives all combinations of i containers 
+        comb = itertools.combinations(puzzle_data, i)
+        for option in comb:
+            if sum(option) == nog:
+                fits = True
+                count +=1
+    return i, count
 
 #run and print solution 
 puzzle_path = "input_day17.txt"
