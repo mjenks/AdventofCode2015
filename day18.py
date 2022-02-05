@@ -70,10 +70,55 @@ def part1(puzzle_data):
     return sum(sum(n) for n in lights)
 
 #functions for part 2
+def update_real(grid):
+    new_grid = [[0 for x in grid[0]] for y in grid]
+    count = [[0 for x in grid[0]] for y in grid]
+    end = len(grid) -1
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if i == 0:
+                if j == 0:
+                    count[i][j] = grid[i+1][j] + grid[i][j+1] + grid[i+1][j+1]
+                elif j == end:
+                    count[i][j] = grid[i+1][j] + grid[i][j-1] + grid[i+1][j-1]
+                else:
+                    count[i][j] = grid[i+1][j-1] + grid[i+1][j] + grid[i][j+1] + grid[i+1][j+1] + grid[i][j-1]
+            elif i == end:
+                if j == 0:
+                    count[i][j] = grid[i-1][j] + grid[i][j+1] + grid[i-1][j+1]
+                elif j == end:
+                    count[i][j] = grid[i-1][j] + grid[i][j-1] + grid[i-1][j-1]
+                else:
+                    count[i][j] = grid[i-1][j-1] + grid[i-1][j] + grid[i][j+1] + grid[i-1][j+1] + grid[i][j-1]
+            else:
+                if j == 0:
+                    count[i][j] = grid[i-1][j] + grid[i-1][j+1] + grid[i][j+1] + grid[i+1][j] + grid[i+1][j+1]
+                elif j == end:
+                    count[i][j] = grid[i-1][j-1] + grid[i-1][j] + grid[i][j-1] + grid[i+1][j-1] + grid[i+1][j]
+                else:
+                    count[i][j] = grid[i-1][j-1] + grid[i-1][j] + grid[i-1][j+1] + grid[i][j-1] + grid[i][j+1] + grid[i+1][j-1] + grid[i+1][j] + grid[i+1][j+1]
+            if (i==0 and j==0) or (i==0 and j==end) or (i==end and j==0) or (i==end and j==end):
+                new_grid[i][j] = 1
+            elif grid[i][j] == 1:
+                if count[i][j] == 2 or count[i][j] == 3:
+                    new_grid[i][j] = 1
+            else:
+                if count[i][j] == 3:
+                    new_grid[i][j] = 1
+                    
+    return new_grid
 
 #solve part 2
 def part2(puzzle_data):
-    return 0
+    lights = puzzle_data
+    lights[0][0] = 1
+    lights[99][0] = 1
+    lights[0][99] = 1
+    lights[99][99] = 1
+    for x in range(100):
+        lights = update_real(lights)
+    
+    return sum(sum(n) for n in lights)
 
 #run and print solution 
 puzzle_path = "input_day18.txt"
