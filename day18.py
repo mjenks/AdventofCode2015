@@ -4,10 +4,15 @@ Created on Sat Feb 05 15:59:29 2022
 
 @author: mjenks
 """
-
+# # is on . is off
+# use 1 for on and 0 for off in parsed data
 #parse input
 def parse(puzzle_input):
     data = []
+    for line in puzzle_input:
+        row = list(line.strip())
+        data.append(row)
+    
     return data
     
 
