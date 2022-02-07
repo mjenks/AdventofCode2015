@@ -10,8 +10,8 @@ def parse(puzzle_input):
     data = []
     for line in puzzle_input[:-2]:
         line = line.strip().split('=>')
-        element = line[0]
-        new = line[1]
+        element = line[0].strip()
+        new = line[1].strip()
         replacement = element, new
         data.append(replacement)
     molecule = puzzle_input[-1].strip()
@@ -23,7 +23,19 @@ def parse(puzzle_input):
 
 #solve part 1
 def part1(puzzle_data):
-    return 0
+    replacements, molecule = puzzle_data
+    new_mols = set()
+    count = 0
+    for replace in replacements:
+        old, new = replace
+        find = molecule.find(old)
+        while find != -1:
+            new_mols.add(molecule[:find] + new + molecule[find+len(old):])
+            find = molecule.find(old, find + 1)
+            
+            
+    
+    return len(new_mols)
 
 #functions for part 2
 
