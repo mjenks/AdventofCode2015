@@ -8,7 +8,15 @@ Created on Sun Feb 06 19:31:15 2022
 #parse input
 def parse(puzzle_input):
     data = []
-    return data
+    for line in puzzle_input[:-2]:
+        line = line.strip().split('=>')
+        element = line[0]
+        new = line[1]
+        replacement = element, new
+        data.append(replacement)
+    molecule = puzzle_input[-1].strip()
+        
+    return data, molecule
     
 
 #functions for part 1
