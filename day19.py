@@ -25,7 +25,6 @@ def parse(puzzle_input):
 def part1(puzzle_data):
     replacements, molecule = puzzle_data
     new_mols = set()
-    count = 0
     for replace in replacements:
         old, new = replace
         find = molecule.find(old)
@@ -38,10 +37,39 @@ def part1(puzzle_data):
     return len(new_mols)
 
 #functions for part 2
+def stepBack(repl, mol):
+    molecules = set()
+    for replace in repl:
+        old, new = replace
+        find = mol.find(new)
+        while find != -1:
+            molecules.add(mol[:find] + old + mol[find+len(new):])
+            find = mol.find(new, find + 1)
+    
+    return molecules
 
+#minimun number of steps to go from e to the input molecule
+#work backward from molecule
+#find all molecules one step back
+#check for e
+#use a set of tested molecules to exclude repeats and longer paths
 #solve part 2
 def part2(puzzle_data):
-    return 0
+    replacements, molecule = puzzle_data
+    found_mols = {molecule}
+    count = 0
+    molecules = {molecule}
+    while not ('e' in molecules):
+        new_mols = set()
+        for mol in molecules:
+            new_mols = new_mols | stepBack(replacements, mol)
+        count += 1
+        molecules = new_mols - found_mols #stores a list of only new molecules one step back
+        found_mols = found_mols | new_mols #add the new molecules to list of previously found ones
+        print count
+            
+        
+    return count
 
 #run and print solution 
 puzzle_path = "input_day19.txt"
