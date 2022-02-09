@@ -27,8 +27,18 @@ def part1(puzzle_data):
 #functions for part 2
 
 #solve part 2
+# elves only deliver to 50 houses
 def part2(puzzle_data):
-    return 0
+    house_num = 10000 #starting at a higher value to save time
+    presents = 10
+    while presents < puzzle_data:
+        house_num += 1
+        presents = 0
+        for x in factors(house_num):
+            if (50*x) >= house_num:
+                presents += 11*x
+        
+    return house_num
 
 #run and print solution 
   
