@@ -4,11 +4,6 @@ Created on Mon Feb 07 21:39:03 2022
 
 @author: mjenks
 """
-
-#parse input
-def parse(puzzle_input):
-    data = []
-    return data
     
 
 #functions for part 1
@@ -24,11 +19,8 @@ def part2(puzzle_data):
     return 0
 
 #run and print solution 
-puzzle_path = "input_day20.txt"
-with open(puzzle_path) as f:
-    puzzle_input = f.readlines()
-    
-puzzle_data = parse(puzzle_input)
+  
+puzzle_data = 34000000
 solution1 = part1(puzzle_data)
 solution2 = part2(puzzle_data)
 print(solution1)
