@@ -30,6 +30,8 @@ Created on Thu Feb 10 11:47:11 2022
 # Defense +3   80     0       3
 #==============================================================================
 
+import itertools
+
 #item has type, cost, damage, and armor
 class item:
     """player equipable item"""
@@ -75,22 +77,13 @@ class player:
     
     def __init__(self):
         self.health = 100
-        self.body = Armor['cloth']
-        self.ring1 = Ring['empty']
-        self.ring2 = Ring['empty']
         
-    def equip(self, item):
-        if item.type == 'weapon':
-            self.weapon = item
-        elif item.type == 'armor':
-            self.body = item
-        elif item.type == 'ring':
-            if self.ring1 == Ring['empty']:
-                self.ring1 = item
-            elif self.ring2 == Ring['empty']:
-                self.ring2 = item
-            else:
-                print "max rings"
+    def equip(self, gear_set):
+        self.weapon = Weapons[gear_set['weapon']]
+        self.body = Armor[gear_set['armor']]
+        self.ring1 = Ring[gear_set['left_ring']]
+        self.ring2 = Ring[gear_set['right_ring']]
+        self.gold_spent = self.weapon.cost + self.body.cost + self.ring1.cost + self.ring2.cost
     
     def damage(self):
         return self.weapon.dmg + self.ring1.dmg + self.ring2.dmg
@@ -98,8 +91,7 @@ class player:
     def armor(self):
         return self.body.arm + self.ring1.arm + self.ring2.arm
         
-    def gold_cost(self):
-        return self.weapon.cost + self.body.cost + self.ring1.cost + self.ring2.cost
+        
 
 #parse input
 def parse(puzzle_input):
@@ -107,7 +99,7 @@ def parse(puzzle_input):
     for line in puzzle_input:
         line = line.split(':')
         name = line[0].strip()
-        val = line[1].strip()
+        val = int(line[1].strip())
         stat = name, val
         data.append(stat)
     return dict(data)
@@ -129,7 +121,19 @@ def fight(player, boss):
 def part1(puzzle_data):
     boss = puzzle_data
     player1 = player()
-    return 0
+    cheapest = 1000
+    gear = {'weapon': Weapons.keys(),
+            'armor': Armor.keys(),
+            'left_ring': Ring.keys(),
+            'right_ring': Ring.keys()}
+    for gear_set in [dict(zip(gear, v)) for v in itertools.product(*gear.values())]:
+        if gear_set['left_ring'] == gear_set['right_ring'] and gear_set['left_ring'] != 'empty':
+            continue
+        player1.equip(gear_set)
+        if fight(player1, boss):
+            cheapest = min(cheapest, player1.gold_spent)
+        
+    return cheapest
 
 #functions for part 2
 
