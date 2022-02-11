@@ -64,7 +64,7 @@ Ring = {
     'empty': item('ring', 0, 0, 0),
     'Dmg+1': item('ring', 25, 1, 0),
     'Dmg+2': item('ring', 50, 2, 0),
-    'Dmg+3': item('ring', 100, 0, 0),
+    'Dmg+3': item('ring', 100, 3, 0),
     'Def+1': item('ring', 20, 0, 1),
     'Def+2': item('ring', 40, 0, 2),
     'Def+3': item('ring', 80, 0, 3),
@@ -122,6 +122,7 @@ def part1(puzzle_data):
     boss = puzzle_data
     player1 = player()
     cheapest = 1000
+    expensive = 0
     gear = {'weapon': Weapons.keys(),
             'armor': Armor.keys(),
             'left_ring': Ring.keys(),
@@ -132,14 +133,13 @@ def part1(puzzle_data):
         player1.equip(gear_set)
         if fight(player1, boss):
             cheapest = min(cheapest, player1.gold_spent)
+        else: 
+            expensive = max(expensive, player1.gold_spent)
         
-    return cheapest
+    return cheapest, expensive
 
 #functions for part 2
 
-#solve part 2
-def part2(puzzle_data):
-    return 0
 
 #run and print solution 
 puzzle_path = "input_day21.txt"
@@ -147,7 +147,6 @@ with open(puzzle_path) as f:
     puzzle_input = f.readlines()
     
 puzzle_data = parse(puzzle_input)
-solution1 = part1(puzzle_data)
-solution2 = part2(puzzle_data)
+solution1, solution2 = part1(puzzle_data)
 print(solution1)
 print(solution2)
