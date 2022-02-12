@@ -49,7 +49,7 @@ class Wizard:
             self.mana += 101
         
         
-    def magic_missle(self, boss):
+    def magic_missile(self, boss):
         #Magic Missile costs 53 mana. It instantly does 4 damage.
         self.mana -= 53
         self.mana_spent += 53
@@ -81,6 +81,19 @@ class Wizard:
         self.mana -= 229
         self.mana_spent += 229
         self.recharge_turns = 5
+        
+    def can_cast(self):
+        self.spells = []
+        if self.mana >= 73:
+            self.spells.append(self.magic_missile)
+            self.spells.append(self.drain)
+        if self.mana >= 113 and self.shield_turns == 0:
+            self.spells.append(self.shield)
+        if self.mana >= 173 and self.poison_turns == 0:
+            self.spells.append(self.poison)
+        if self.mana >= 229 and self.recharge_turns == 0:
+            self.spells.append(self.recharge)
+        
 
 #parse input
 def parse(puzzle_input):
@@ -103,6 +116,10 @@ def fight(player, boss):
             return True
         if turn%2 == 0:
             #player turn
+            player.can_cast()
+            #player loses if unable to cast
+            if len(player.spells) == 0:
+                return False
             #cast a spell...
         else:
             #boss turn
@@ -112,6 +129,8 @@ def fight(player, boss):
         return False
     else:
         return True
+   
+    
 
 #solve part 1
 def part1(puzzle_data):
