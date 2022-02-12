@@ -6,7 +6,7 @@ Created on Fri Feb 11 22:30:48 2022
 """
 
 #boss class with attack action
-class boss:
+class Boss:
     """boss character"""
     
     def __init__(self, hit_points, damage):
@@ -19,7 +19,7 @@ class boss:
 
 
 #player as a class with spells as functions
-class wizard:
+class Wizard:
     """player character"""
     
     def __init__(self):
@@ -84,21 +84,26 @@ class wizard:
 
 #parse input
 def parse(puzzle_input):
-	data = []
-	return data
+    data = []
+    for line in puzzle_input:
+        val = int(line.split(':')[1].strip())
+        data.append(val)
+        
+    boss = Boss(data[0],data[1])
+    return boss
     
 
 #functions for part 1
 
 #solve part 1
 def part1(puzzle_data):
-	return 0
-
+    return 0
+ 
 #functions for part 2
 
 #solve part 2
 def part2(puzzle_data):
-	return 0
+    return 0
 
 #run and print solution 
 puzzle_path = "input_day22.txt"
