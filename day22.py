@@ -11,10 +11,10 @@ class Boss:
     
     def __init__(self, hit_points, damage):
         self.health = hit_points
-        self.attack = damage
+        self.damage = damage
         
     def attack(self, player):
-        player.health -= max(1, self.attack - player.armor)
+        player.health -= max(1, self.damage - player.armor)
         
 
 
@@ -94,6 +94,24 @@ def parse(puzzle_input):
     
 
 #functions for part 1
+#boss fight true if player wins false if boss wins
+def fight(player, boss):
+    turn = 0
+    while player.health > 0 and boss.health > 0:
+        player.turn_start(boss)
+        if boss.health <= 0:
+            return True
+        if turn%2 == 0:
+            #player turn
+            #cast a spell...
+        else:
+            #boss turn
+            boss.attack(player)
+        turn += 1
+    if player.health <= 0:
+        return False
+    else:
+        return True
 
 #solve part 1
 def part1(puzzle_data):
