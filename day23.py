@@ -36,7 +36,101 @@ def parse(puzzle_input):
 
 #solve part 1
 def part1(puzzle_data):
-    return 0
+    a = 0
+    b = 0
+    i = 0
+    while i < len(puzzle_data):
+        command = puzzle_data[i]
+        inst = command[0]
+        if inst == 'hlf': #halve the register
+            if command[1] == 'a':
+                a = a // 2
+            elif command[1] == 'b':
+                b = b // 2
+            else:
+                print "Invalid register"
+            i += 1
+        elif inst == 'tpl': #triple the register
+            if command[1] == 'a':
+                a = 3*a
+            elif command[1] == 'b':
+                b = 3*b
+            else:
+                print "Invalid register"
+            i +=1
+        elif inst == 'inc': #incriment register
+            if command[1] == 'a':
+                a += 1
+            elif command[1] == 'b':
+                b += 1
+            else:
+                print "Invalid register"
+            i +=1
+        elif inst == 'jmp': #jump
+            if command[1] == '+':
+                i += command[2]
+            elif command[1] == '-':
+                i -= command[2]
+            else:
+                print "Error"
+                continue
+        elif inst == 'jie': #jump if even
+            if command[1] == 'a':
+                if a%2 == 0:
+                    if command[2] == '+':
+                        i += command[3]
+                    elif command[2] == '-':
+                        i -= command[3]
+                    else:
+                        print "Error"
+                        continue
+                else:
+                    i += 1
+            elif command[1] == 'b':
+                if b%2 == 0:
+                    if command[2] == '+':
+                        i += command[3]
+                    elif command[2] == '-':
+                        i -= command[3]
+                    else:
+                        print "Error"
+                        continue
+                else:
+                    i += 1
+            else:
+                print "Invalid regisiter"
+                i += 1
+        elif inst == 'jio': #jump if one
+            if command[1] == 'a':
+                if a == 1:
+                    if command[2] == '+':
+                        i += command[3]
+                    elif command[2] == '-':
+                        i -= command[3]
+                    else:
+                        print "Error"
+                        continue
+                else:
+                    i += 1
+            elif command[1] == 'b':
+                if b == 1:
+                    if command[2] == '+':
+                        i += command[3]
+                    elif command[2] == '-':
+                        i -= command[3]
+                    else:
+                        print "Error"
+                        continue
+                else:
+                    i += 1
+            else:
+                print "Invalid regisiter"
+                i += 1
+        else:
+            print "Unknown instruction"
+            i += 1
+        
+    return a, b
 
 #functions for part 2
 
