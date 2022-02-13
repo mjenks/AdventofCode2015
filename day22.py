@@ -55,7 +55,7 @@ class Wizard:
         #Magic Missile costs 53 mana. It instantly does 4 damage.
         self.mana -= 53
         self.mana_spent += 53
-        boss.health -= 2
+        boss.health -= 4
         
     def drain(self, boss):
         #Drain costs 73 mana. It instantly does 2 damage and heals you for 2 hit points.
@@ -116,7 +116,7 @@ def fight(player, boss):
         if boss.health <= 0:
             return True
         if turn%2 == 0:
-            #player turn
+            #player turn                    
             player.can_cast()
             #player loses if unable to cast
             if len(player.spells) == 0:
@@ -156,10 +156,54 @@ def part1(puzzle_data):
     return least_mana, wins
  
 #functions for part 2
+def fight_hard(player, boss):
+    turn = 0
+    #cast order of spells (only way I found to win...)
+    cast = ['s', 'r', 'p', 's', 'r', 'p', 's', 'r', 'p', 's', 'm', 'p', 'm']
+    while player.health > 0 and boss.health > 0:
+        player.turn_start(boss)
+        if boss.health <= 0:
+            return True
+        if turn%2 == 0:
+            #player turn
+            #hard mode lose 1 hp each player turn start
+            player.health -= 1
+            if player.health == 0:
+                return False
+                    
+            player.can_cast()
+            #player loses if unable to cast
+            if len(player.spells) == 0:
+                return False
+            #cast spell from cast order
+            i = turn//2
+            if cast[i] == 's':
+                player.shield(boss)
+            elif cast[i] == 'r':
+                player.recharge(boss)
+            elif cast[i] == 'p':
+                player.poison(boss)
+            elif cast[i] == 'd':
+                player.drain(boss)
+            else:
+                player.magic_missile(boss)
+            
+        else:
+            #boss turn
+            boss.attack(player)
+        turn += 1
+    if player.health <= 0:
+        return False
+    else:
+        return True
 
 #solve part 2
 def part2(puzzle_data):
-    return 0
+    player = Wizard()
+    boss = Boss(puzzle_data[0], puzzle_data[1])
+    fight_hard(player, boss)
+        
+    return player.mana_spent
 
 #run and print solution 
 puzzle_path = "input_day22.txt"
