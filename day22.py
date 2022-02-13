@@ -5,6 +5,8 @@ Created on Fri Feb 11 22:30:48 2022
 @author: mjenks
 """
 
+import random
+
 #boss class with attack action
 class Boss:
     """boss character"""
@@ -62,7 +64,7 @@ class Wizard:
         self.health += 2
         boss.health -= 2
         
-    def shield(self):
+    def shield(self, boss):
         #Shield costs 113 mana. It starts an effect that lasts for 6 turns. 
         #While shield is active, your armor is increased by 7.
         self.mana -= 113
@@ -70,13 +72,13 @@ class Wizard:
         self.armor = 7
         self.shield_turns = 6
         
-    def poison(self):
+    def poison(self, boss):
         #Poison costs 173 mana. It starts an effect that lasts for 6 turns. 
         self.mana -= 173
         self.mana_spent += 173
         self.poison_turns = 6
         
-    def recharge(self):
+    def recharge(self, boss):
         #Recharge costs 229 mana. It starts an effect that lasts for 5 turns. 
         self.mana -= 229
         self.mana_spent += 229
@@ -102,8 +104,7 @@ def parse(puzzle_input):
         val = int(line.split(':')[1].strip())
         data.append(val)
         
-    boss = Boss(data[0],data[1])
-    return boss
+    return data
     
 
 #functions for part 1
@@ -120,7 +121,14 @@ def fight(player, boss):
             #player loses if unable to cast
             if len(player.spells) == 0:
                 return False
-            #cast a spell...
+            #cast a random spell prioritizing poison and recharge
+            if player.poison in player.spells and boss.health > 18:
+                player.poison(boss)
+            elif player.mana < 300 and player.recharge in player.spells and boss.health > 20:
+                player.recharge(boss)
+            else:
+                cast = random.choice(player.spells)
+                cast(boss)
         else:
             #boss turn
             boss.attack(player)
@@ -134,7 +142,18 @@ def fight(player, boss):
 
 #solve part 1
 def part1(puzzle_data):
-    return 0
+    count = 0
+    wins = 0
+    least_mana = 10000
+    while count < 100000:
+        player = Wizard()
+        boss = Boss(puzzle_data[0], puzzle_data[1])
+        if fight(player, boss):
+            least_mana = min(player.mana_spent, least_mana)
+            wins += 1
+        count +=1
+        
+    return least_mana, wins
  
 #functions for part 2
 
