@@ -8,6 +8,27 @@ Created on Sun Feb 13 13:12:28 2022
 #parse input
 def parse(puzzle_input):
     data = []
+    for line in puzzle_input:
+        line = line.strip()
+        command = []
+        inst = line[:3]
+        command.append(inst)
+        if len(line) == 5:
+            reg = line[4]
+            command.append(reg)
+        elif len(line) > 7:
+            reg = line[4]
+            command.append(reg)
+            sign = line[7]
+            command.append(sign)
+            steps = int(line[8:])
+            command.append(steps)
+        elif len(line) > 5:
+            sign = line[4]
+            command.append(sign)
+            steps = int(line[5:])
+            command.append(steps)
+        data.append(command)
     return data
     
 
