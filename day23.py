@@ -33,14 +33,10 @@ def parse(puzzle_input):
     
 
 #functions for part 1
-
-#solve part 1
-def part1(puzzle_data):
-    a = 0
-    b = 0
+def run(instructions, a, b):
     i = 0
-    while i < len(puzzle_data):
-        command = puzzle_data[i]
+    while i < len(instructions):
+        command = instructions[i]
         inst = command[0]
         if inst == 'hlf': #halve the register
             if command[1] == 'a':
@@ -131,12 +127,20 @@ def part1(puzzle_data):
             i += 1
         
     return a, b
+    
+#solve part 1
+def part1(puzzle_data):
+    a = 0
+    b = 0
+    return run(puzzle_data, a, b)
 
 #functions for part 2
 
 #solve part 2
 def part2(puzzle_data):
-    return 0
+    a = 1
+    b = 0
+    return run(puzzle_data, a, b)
 
 #run and print solution 
 puzzle_path = "input_day23.txt"
