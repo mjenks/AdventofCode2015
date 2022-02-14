@@ -46,7 +46,19 @@ def part1(puzzle_data):
 
 #solve part 2
 def part2(puzzle_data):
-    return 0
+    group_weight = sum(puzzle_data)/4
+    options = set()
+    min_grp = group_weight//puzzle_data[-1]
+    for i in range(min_grp,len(puzzle_data)//4): #smallest group can't have more than 1/4 
+        for j in itertools.combinations(puzzle_data, i):
+            if sum(j) == group_weight:
+                options.add(j)
+    smallest_group = min(len(x) for x in options)
+    qe = []
+    for group in options:
+        if len(group) == smallest_group:
+            qe.append(entangle(group))
+    return min(qe)
 
 #run and print solution 
 puzzle_path = "input_day24.txt"
